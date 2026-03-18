@@ -147,15 +147,23 @@
                         savedStates = parsed;
                     }
                 }
-            } catch {
+            } catch (error) {
+                console.warn('Unable to load saved checklist state.', error);
                 savedStates = [];
             }
 
             checkboxes.forEach((checkbox, index) => {
                 checkbox.removeAttribute('disabled');
                 const listItem = checkbox.closest('li');
-                const rawText = listItem ? (listItem.textContent || '') : '';
-                const itemText = rawText.replace(/[\s\n]+/g, ' ').trim();
+                let itemText = '';
+                if (listItem) {
+                    const listItemClone = listItem.cloneNode(true);
+                    const clonedCheckbox = listItemClone.querySelector('input[type="checkbox"]');
+                    if (clonedCheckbox) {
+                        clonedCheckbox.remove();
+                    }
+                    itemText = (listItemClone.textContent || '').replace(/[\s\n]+/g, ' ').trim();
+                }
                 const ariaLabel = itemText ? `Checklist item: ${itemText}` : `Workshop task ${index + 1}`;
                 checkbox.setAttribute('aria-label', ariaLabel);
 
