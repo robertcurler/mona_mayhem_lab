@@ -154,7 +154,8 @@
             checkboxes.forEach((checkbox, index) => {
                 checkbox.removeAttribute('disabled');
                 const listItem = checkbox.closest('li');
-                const itemText = listItem ? listItem.textContent.replace(/\s+/g, ' ').trim() : '';
+                const rawText = listItem ? (listItem.innerText || listItem.textContent || '') : '';
+                const itemText = rawText.replace(/\s+/g, ' ').trim();
                 const ariaLabel = itemText ? `Checklist item: ${itemText}` : `Checklist item ${index + 1}`;
                 checkbox.setAttribute('aria-label', ariaLabel);
 
