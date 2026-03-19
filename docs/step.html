@@ -85,6 +85,7 @@
         const GITHUB_RAW_BASE = isLocal ? '../' : 'https://raw.githubusercontent.com/copilot-dev-days/mona-mayhem/main/';
         const STEP_ID_PATTERN = /^[a-z0-9-]{1,64}$/;
         const WHITESPACE_NORMALIZE_PATTERN = /[\s\n]+/g;
+        const COPY_BUTTON_RESET_DELAY_MS = 2000;
 
         let currentIndex = 0;
         let currentTrack = 'vscode';
@@ -295,7 +296,7 @@
                 button.textContent = 'Copy';
                 button.classList.remove('is-copied', 'is-error');
                 button.removeAttribute('aria-live');
-            }, 2000);
+            }, COPY_BUTTON_RESET_DELAY_MS);
         }
 
         function enableCodeBlockCopyButtons() {
@@ -326,7 +327,7 @@
                         copyButton.setAttribute('aria-live', 'polite');
                         updateCopyButtonState(copyButton, 'Copied!', 'is-copied');
                     } catch (error) {
-                        console.error('Unable to copy code block.', error);
+                        console.error('Failed to copy code to clipboard:', error);
                         copyButton.setAttribute('aria-live', 'polite');
                         updateCopyButtonState(copyButton, 'Failed', 'is-error');
                     }
