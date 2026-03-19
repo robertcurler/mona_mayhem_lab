@@ -306,7 +306,7 @@
 
             const resetTimer = window.setTimeout(() => {
                 button.textContent = 'Copy';
-                button.setAttribute('aria-label', button.dataset.defaultAriaLabel || 'Copy code block');
+                button.setAttribute('aria-label', button.dataset.defaultAriaLabel);
                 button.classList.remove('is-copied', 'is-error');
                 copyButtonResetTimers.delete(button);
             }, COPY_BUTTON_RESET_DELAY_MS);
@@ -342,7 +342,7 @@
                     try {
                         const codeText = codeBlock.textContent || '';
                         if (!codeText.trim()) {
-                            throw new Error('Code block is empty.');
+                            return;
                         }
 
                         await copyCodeText(codeText);

@@ -2,6 +2,7 @@
     --bg-dark: #0a0a0f;
     --bg-card: #12121a;
     --bg-code: #1a1a2e;
+    --bg-overlay-strong: rgba(10, 10, 15, 0.92);
     --code-block-control-offset: 0.75rem;
     --code-block-top-padding: 3.25rem;
     --neon-cyan: #00f5ff;
@@ -67,7 +68,7 @@ body::before { content: ''; position: fixed; top: 0; left: 0; width: 100%; heigh
     right: var(--code-block-control-offset);
     border: 1px solid var(--border-color);
     border-radius: 999px;
-    background: rgba(10, 10, 15, 0.92);
+    background: var(--bg-overlay-strong);
     color: var(--text-secondary);
     padding: 0.35rem 0.75rem;
     font: inherit;
