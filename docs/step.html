@@ -86,6 +86,7 @@
         const STEP_ID_PATTERN = /^[a-z0-9-]{1,64}$/;
         const WHITESPACE_NORMALIZE_PATTERN = /[\s\n]+/g;
         const COPY_BUTTON_RESET_DELAY_MS = 2000;
+        const copyButtonResetTimers = new WeakMap();
 
         let currentIndex = 0;
         let currentTrack = 'vscode';
@@ -281,22 +282,26 @@
             }
         }
 
-        function updateCopyButtonState(button, label, stateClass) {
+        function updateCopyButtonState(button, label, stateClass, ariaLabel) {
             button.textContent = label;
+            button.setAttribute('aria-label', ariaLabel);
             button.classList.remove('is-copied', 'is-error');
             if (stateClass) {
                 button.classList.add(stateClass);
             }
 
-            if (button.resetTimer) {
-                window.clearTimeout(button.resetTimer);
+            const existingTimer = copyButtonResetTimers.get(button);
+            if (existingTimer) {
+                window.clearTimeout(existingTimer);
             }
 
-            button.resetTimer = window.setTimeout(() => {
+            const resetTimer = window.setTimeout(() => {
                 button.textContent = 'Copy';
+                button.setAttribute('aria-label', button.dataset.defaultAriaLabel || 'Copy code block');
                 button.classList.remove('is-copied', 'is-error');
-                button.removeAttribute('aria-live');
             }, COPY_BUTTON_RESET_DELAY_MS);
+
+            copyButtonResetTimers.set(button, resetTimer);
         }
 
         function enableCodeBlockCopyButtons() {
@@ -319,17 +324,17 @@
                 copyButton.type = 'button';
                 copyButton.className = 'copy-code-btn';
                 copyButton.textContent = 'Copy';
-                copyButton.setAttribute('aria-label', `Copy code block ${index + 1}`);
+                copyButton.dataset.defaultAriaLabel = `Copy code block ${index + 1}`;
+                copyButton.setAttribute('aria-label', copyButton.dataset.defaultAriaLabel);
+                copyButton.setAttribute('aria-live', 'polite');
 
                 copyButton.addEventListener('click', async () => {
                     try {
                         await copyCodeText(codeBlock.textContent || '');
-                        copyButton.setAttribute('aria-live', 'polite');
-                        updateCopyButtonState(copyButton, 'Copied!', 'is-copied');
+                        updateCopyButtonState(copyButton, 'Copied!', 'is-copied', `Copied code block ${index + 1}`);
                     } catch (error) {
                         console.error('Failed to copy code to clipboard:', error);
-                        copyButton.setAttribute('aria-live', 'polite');
-                        updateCopyButtonState(copyButton, 'Failed', 'is-error');
+                        updateCopyButtonState(copyButton, 'Failed', 'is-error', `Failed to copy code block ${index + 1}`);
                     }
                 });
 
