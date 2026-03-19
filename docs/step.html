@@ -340,7 +340,7 @@
 
                 copyButton.addEventListener('click', async () => {
                     try {
-                        await copyCodeText(codeBlock.textContent || codeBlock.innerText || '');
+                        await copyCodeText(codeBlock.textContent || '');
                         updateCopyButtonState(copyButton, 'Copied!', 'is-copied', 'Copied code block');
                     } catch (error) {
                         console.error('Failed to copy code to clipboard:', error);
