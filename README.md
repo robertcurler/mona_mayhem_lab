@@ -1,3 +1,5 @@
+🌐 [Português (Brasil)](README.pt_BR.md) | [Español](README.es.md)
+
 # 🎮 Mona Mayhem
 
 **VS Code & GitHub Copilot CLI Workshop** — Build a GitHub Contribution Battle Arena

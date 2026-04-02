@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-LSC44NDPLQ"></script>
@@ -20,9 +20,9 @@
     <link rel="alternate" hreflang="pt-BR" href="https://copilot-dev-days.github.io/mona-mayhem/pt_BR/">
     <link rel="alternate" hreflang="es" href="https://copilot-dev-days.github.io/mona-mayhem/es/">
     <link rel="alternate" hreflang="x-default" href="https://copilot-dev-days.github.io/mona-mayhem/">
-    <link rel="stylesheet" href="step.css">
-    <link rel="stylesheet" href="light-theme.css">
-    <script src="theme-toggle.js"></script>
+    <link rel="stylesheet" href="../step.css">
+    <link rel="stylesheet" href="../light-theme.css">
+    <script src="../theme-toggle.js"></script>
 </head>
 <body>
     <header class="header">
@@ -36,18 +36,18 @@
                     <button class="track-btn active" data-track="vscode" type="button">VS Code</button>
                     <button class="track-btn" data-track="cli" type="button">CLI</button>
                 </div>
-                <span class="track-indicator" id="trackIndicator">VS Code track</span>
+                <span class="track-indicator" id="trackIndicator">Trilha VS Code</span>
                 <div class="locale-picker" id="localePicker">
-                    <button type="button" class="locale-toggle" aria-haspopup="listbox" aria-expanded="false" aria-label="Select language">🌐</button>
-                    <ul role="listbox" aria-label="Language">
-                        <li role="option" data-locale="en" aria-selected="true" class="active">🇬🇧 English</li>
+                    <button type="button" class="locale-toggle" aria-haspopup="listbox" aria-expanded="false" aria-label="Selecionar idioma">🌐</button>
+                    <ul role="listbox" aria-label="Idioma">
+                        <li role="option" data-locale="en" aria-selected="false">🇬🇧 English</li>
                         <li role="option" data-locale="es" aria-selected="false">🇪🇸 Español</li>
-                        <li role="option" data-locale="pt-BR" aria-selected="false">🇧🇷 Português (Brasil)</li>
+                        <li role="option" data-locale="pt-BR" aria-selected="true" class="active">🇧🇷 Português (Brasil)</li>
                     </ul>
                 </div>
-                <button class="theme-toggle" onclick="toggleTheme()">☀️ Light</button>
-                <button class="nav-btn" id="prevBtn" onclick="navigate(-1)" disabled>← Prev</button>
-                <button class="nav-btn" id="nextBtn" onclick="navigate(1)">Next →</button>
+                <button class="theme-toggle" onclick="toggleTheme()">☀️ Claro</button>
+                <button class="nav-btn" id="prevBtn" onclick="navigate(-1)" disabled>← Anterior</button>
+                <button class="nav-btn" id="nextBtn" onclick="navigate(1)">Próximo →</button>
             </div>
         </div>
     </header>
@@ -55,7 +55,7 @@
     <div class="layout">
         <aside class="sidebar">
             <div class="sidebar-section">
-                <div class="sidebar-title">Workshop Steps</div>
+                <div class="sidebar-title">Etapas do Workshop</div>
                 <nav id="stepNav"></nav>
             </div>
         </aside>
@@ -63,7 +63,7 @@
         <main class="main">
             <div class="content">
                 <div id="markdownContent">
-                    <div class="loading">Loading content</div>
+                    <div class="loading">Carregando conteúdo</div>
                 </div>
                 <div class="nav-footer" id="navFooter"></div>
             </div>
@@ -75,26 +75,26 @@
         const TRACKS = {
             vscode: {
                 label: 'VS Code',
-                indicator: 'VS Code track'
+                indicator: 'Trilha VS Code'
             },
             cli: {
                 label: 'CLI',
-                indicator: 'CLI track'
+                indicator: 'Trilha CLI'
             }
         };
 
         const steps = [
-            { id: '00-overview', file: 'workshop/00-overview.md', title: 'Overview', number: '00' },
-            { id: '01-setup', file: 'workshop/01-setup.md', title: 'Setup & Context Engineering', number: '01' },
-            { id: '02-plan-and-scaffold', file: 'workshop/02-plan-and-scaffold.md', title: 'Plan & Scaffold', number: '02' },
-            { id: '03-agent-mode', file: 'workshop/03-agent-mode.md', title: 'Build the Game', number: '03' },
-            { id: '04-design-vibes', file: 'workshop/04-design-vibes.md', title: 'Design-First Theming', number: '04' },
-            { id: '05-polish', file: 'workshop/05-polish.md', title: 'Polish & Parallel Work', number: '05' },
-            { id: '06-bonus', file: 'workshop/06-bonus.md', title: 'Bonus & Extensions', number: '🎉' },
+            { id: '00-overview', file: '00-overview.md', title: 'Visão Geral', number: '00' },
+            { id: '01-setup', file: '01-setup.md', title: 'Configuração & Engenharia de Contexto', number: '01' },
+            { id: '02-plan-and-scaffold', file: '02-plan-and-scaffold.md', title: 'Planejar & Estruturar', number: '02' },
+            { id: '03-agent-mode', file: '03-agent-mode.md', title: 'Construir o Jogo', number: '03' },
+            { id: '04-design-vibes', file: '04-design-vibes.md', title: 'Temas Design-First', number: '04' },
+            { id: '05-polish', file: '05-polish.md', title: 'Polimento & Trabalho Paralelo', number: '05' },
+            { id: '06-bonus', file: '06-bonus.md', title: 'Bônus & Extensões', number: '🎉' },
         ];
 
         const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' || window.location.protocol === 'file:';
-        const GITHUB_RAW_BASE = isLocal ? '../' : 'https://raw.githubusercontent.com/copilot-dev-days/mona-mayhem/main/';
+        const GITHUB_RAW_BASE = isLocal ? '../../workshop/pt_BR/' : 'https://raw.githubusercontent.com/copilot-dev-days/mona-mayhem/main/workshop/pt_BR/';
         const STEP_ID_PATTERN = /^[a-z0-9-]{1,64}$/;
         const WHITESPACE_NORMALIZE_PATTERN = /[\s\n]+/g;
         const COPY_BUTTON_RESET_DELAY_MS = 2000;
@@ -169,8 +169,8 @@
             const prev = currentIndex > 0 ? steps[currentIndex - 1] : null;
             const next = currentIndex < steps.length - 1 ? steps[currentIndex + 1] : null;
             footer.innerHTML = `
-                <a href="${prev ? buildStepUrl(prev.id) : '#'}" class="nav-footer-btn ${!prev ? 'disabled' : ''}">← ${prev ? prev.title : 'Previous'}</a>
-                <a href="${next ? buildStepUrl(next.id) : '#'}" class="nav-footer-btn ${!next ? 'disabled' : ''}">${next ? next.title : 'Next'} →</a>
+                <a href="${prev ? buildStepUrl(prev.id) : '#'}" class="nav-footer-btn ${!prev ? 'disabled' : ''}">← ${prev ? prev.title : 'Anterior'}</a>
+                <a href="${next ? buildStepUrl(next.id) : '#'}" class="nav-footer-btn ${!next ? 'disabled' : ''}">${next ? next.title : 'Próximo'} →</a>
             `;
         }
 
@@ -206,9 +206,9 @@
                 return `<blockquote style="border-left-color: ${color};"><p style="color: ${color};">${icon} ${type.toUpperCase()}</p><p>${cleanContent}</p></blockquote>\n`;
             });
 
-            md = md.replace(/\[([^\]]+)\]\((?:\.\/)?(?:workshop\/)?(\d+)-([^)]+)\.md\)/g, function(match, text, num, slug) {
+            md = md.replace(/\[([^\]]+)\]\((?:\.\/)?(?:workshop\/(?:pt_BR\/)?)?(\d+)-([^)]+)\.md\)/g, function(match, text, num, slug) {
                 const stepId = `${num}-${slug}`;
-                const found = steps.find(s => s.id === stepId || s.file === `workshop/${num}-${slug}.md`);
+                const found = steps.find(s => s.id === stepId || s.file === `${num}-${slug}.md`);
                 if (found) {
                     return `[${text}](${buildStepUrl(found.id)})`;
                 }
@@ -255,7 +255,7 @@
                     }
                     itemText = (listItemClone.textContent || '').replace(WHITESPACE_NORMALIZE_PATTERN, ' ').trim();
                 }
-                const ariaLabel = itemText ? `Checklist item: ${itemText}` : `Workshop task ${index + 1}`;
+                const ariaLabel = itemText ? `Item da checklist: ${itemText}` : `Tarefa do workshop ${index + 1}`;
                 checkbox.setAttribute('aria-label', ariaLabel);
 
                 if (typeof savedStates[index] === 'boolean') {
@@ -317,7 +317,7 @@
             }
 
             const resetTimer = window.setTimeout(() => {
-                button.textContent = 'Copy';
+                button.textContent = 'Copiar';
                 button.setAttribute('aria-label', button.dataset.defaultAriaLabel);
                 button.classList.remove('is-copied', 'is-error');
                 copyButtonResetTimers.delete(button);
@@ -345,8 +345,8 @@
                 const copyButton = document.createElement('button');
                 copyButton.type = 'button';
                 copyButton.className = 'copy-code-btn';
-                copyButton.textContent = 'Copy';
-                copyButton.dataset.defaultAriaLabel = 'Copy code block';
+                copyButton.textContent = 'Copiar';
+                copyButton.dataset.defaultAriaLabel = 'Copiar bloco de código';
                 copyButton.setAttribute('aria-label', copyButton.dataset.defaultAriaLabel);
                 copyButton.setAttribute('aria-live', 'polite');
 
@@ -358,10 +358,10 @@
                         }
 
                         await copyCodeText(codeText);
-                        updateCopyButtonState(copyButton, 'Copied!', 'is-copied', 'Copied code block');
+                        updateCopyButtonState(copyButton, 'Copiado!', 'is-copied', 'Bloco de código copiado');
                     } catch (error) {
                         console.error('Failed to copy code to clipboard:', error);
-                        updateCopyButtonState(copyButton, 'Failed', 'is-error', 'Failed to copy code block');
+                        updateCopyButtonState(copyButton, 'Falhou', 'is-error', 'Falha ao copiar bloco de código');
                     }
                 });
 
@@ -376,7 +376,7 @@
 
             const step = steps.find(s => s.id === stepId);
             if (!step) {
-                document.getElementById('markdownContent').innerHTML = '<p>Step not found.</p>';
+                document.getElementById('markdownContent').innerHTML = '<p>Passo não encontrado.</p>';
                 return;
             }
 
@@ -387,7 +387,7 @@
             document.title = `${step.title} - Mona Mayhem Workshop (${TRACKS[currentTrack].label})`;
 
             const contentEl = document.getElementById('markdownContent');
-            contentEl.innerHTML = '<div class="loading">Loading content</div>';
+            contentEl.innerHTML = '<div class="loading">Carregando conteúdo</div>';
 
             try {
                 const url = GITHUB_RAW_BASE + step.file;
@@ -411,7 +411,7 @@
                 contentEl.innerHTML = `
                     <div class="markdown">
                         <h1>${step.title}</h1>
-                        <p>Could not load content. Please check the <a href="https://github.com/copilot-dev-days/mona-mayhem" target="_blank">GitHub repository</a> directly.</p>
+                        <p>Não foi possível carregar o conteúdo. Por favor, verifique o <a href="https://github.com/copilot-dev-days/mona-mayhem" target="_blank">repositório GitHub</a> diretamente.</p>
                         <p style="color: var(--text-secondary); font-size: 0.875rem;">Error: ${err.message}</p>
                     </div>`;
             }
